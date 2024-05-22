@@ -20,6 +20,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /build-tools
 
 RUN git clone https://github.com/Microsoft/vcpkg.git --branch $VCPKG_REPO_TAG
+
+# try only use this on arm image.
+ENV VCPKG_FORCE_SYSTEM_BINARIES=1
+
 RUN ./vcpkg/bootstrap-vcpkg.sh
 RUN mkdir -p ~/bin && ln -s /build-tools/vcpkg/vcpkg ~/bin/vcpkg
 
