@@ -25,7 +25,8 @@ RUN git clone https://github.com/Microsoft/vcpkg.git --branch $VCPKG_REPO_TAG
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
 
 RUN ./vcpkg/bootstrap-vcpkg.sh
-RUN mkdir -p ~/bin && ln -s /build-tools/vcpkg/vcpkg ~/bin/vcpkg
+RUN mkdir -p ~/bin
+RUN ln -s /build-tools/vcpkg/vcpkg /bin/vcpkg
 
 ENV CMAKE_TOOLCHAIN_FILE=/build-tools/vcpkg/scripts/buildsystems/vcpkg.cmake
 ENV CMAKE_GENERATOR=Ninja
