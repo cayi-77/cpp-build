@@ -1,4 +1,4 @@
-ARG DEBIAN_TAG=stable
+ARG DEBIAN_TAG=sid
 FROM debian:${DEBIAN_TAG}
 ARG VCPKG_REPO_TAG="master"
 
