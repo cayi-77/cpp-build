@@ -1,4 +1,4 @@
-ARG DEBIAN_TAG=sid
+ARG DEBIAN_TAG=trixie
 FROM debian:${DEBIAN_TAG}
 ARG VCPKG_REPO_TAG="master"
 
