@@ -24,7 +24,7 @@ RUN git clone https://github.com/Microsoft/vcpkg.git --branch $VCPKG_REPO_TAG
 # try only use this on arm image.
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
 
-RUN ./vcpkg/bootstrap-vcpkg.sh
+RUN ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 RUN mkdir -p ~/bin
 RUN ln -s /build-tools/vcpkg/vcpkg /bin/vcpkg
 
