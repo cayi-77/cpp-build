@@ -82,7 +82,13 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           # use matrix.debian-tag as tag, see https://github.com/docker/metadata-action?tab=readme-ov-file#typeschedule
           tags: |
-            type=schedule,enable=true,priority=1000,pattern=${{ matrix.debian-tag }}
+            type=schedule,pattern=${{ matrix.debian-tag }}-{{date 'YYYYMMDD-hhmmss' tz='Asia/Tokyo'}}
+            type=semver,pattern=${{ matrix.debian-tag }}-{{version}}
+            type=semver,pattern=${{ matrix.debian-tag }}-{{major}}.{{minor}}
+            type=semver,pattern=${{ matrix.debian-tag }}-{{major}}
+            type=ref,event=branch,pattern=${{ matrix.debian-tag }}
+            type=ref,event=pr
+            type=sha
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
