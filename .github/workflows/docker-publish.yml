@@ -7,9 +7,9 @@ name: Docker
 
 on:
   schedule:
-    - cron: '17 11 * * *'
+    - cron: '17 11 * * 0' # Runs at 11:17, only on Sunday
   push:
-    branches: [ "main", "sid", "trixie" ]
+    branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*' ]
   pull_request:
