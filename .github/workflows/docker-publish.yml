@@ -87,6 +87,7 @@ jobs:
             type=semver,pattern=${{ matrix.debian-tag }}-{{major}}.{{minor}}
             type=semver,pattern=${{ matrix.debian-tag }}-{{major}}
             type=ref,event=branch,pattern=${{ matrix.debian-tag }}
+            type=ref,event=push,pattern=${{ matrix.debian-tag }}
             type=ref,event=pr
             type=sha
 
