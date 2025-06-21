@@ -27,10 +27,6 @@ jobs:
   build:
     strategy:
       matrix:
-        image-os:
-          - linux/amd64
-          # - linux/arm/v7
-          # - linux/arm64
         debian-tag:
           - stable
           - sid
@@ -104,7 +100,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: ${{ matrix.image-os }}
+          platforms: linux/amd64,linux/arm64
           build-args: DEBIAN_TAG=${{ matrix.debian-tag }}
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=multi platform image
 
