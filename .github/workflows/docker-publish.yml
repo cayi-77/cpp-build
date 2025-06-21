@@ -27,10 +27,6 @@ jobs:
   build:
     strategy:
       matrix:
-        image-os:
-          - linux/amd64
-          # - linux/arm/v7
-          # - linux/arm64
         debian-tag:
           - stable
           - sid
@@ -54,6 +50,9 @@ jobs:
         uses: sigstore/cosign-installer@v3.5.0
         with:
           cosign-release: 'v2.2.2'
+      # Setup QEMU for arm64 image.
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
@@ -96,7 +95,7 @@ jobs:
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
         id: build-and-push
-        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
@@ -104,7 +103,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: ${{ matrix.image-os }}
+          platforms: linux/amd64,linux/arm64
           build-args: DEBIAN_TAG=${{ matrix.debian-tag }}
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=multi platform image
 
