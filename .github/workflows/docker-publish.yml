@@ -27,10 +27,9 @@ jobs:
   build:
     strategy:
       matrix:
-        debian-tag:
-          - stable
-          - sid
-          - trixie
+        # Tag for output image.
+        output-image-tag:
+          - fedora
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -80,14 +79,14 @@ jobs:
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          # use matrix.debian-tag as tag, see https://github.com/docker/metadata-action?tab=readme-ov-file#typeschedule
+          # use matrix.output-image-tag as tag, see https://github.com/docker/metadata-action?tab=readme-ov-file#typeschedule
           tags: |
-            type=schedule,pattern=${{ matrix.debian-tag }}-{{date 'YYYYMMDD-hhmmss' tz='Asia/Tokyo'}}
-            type=semver,pattern=${{ matrix.debian-tag }}-{{version}}
-            type=semver,pattern=${{ matrix.debian-tag }}-{{major}}.{{minor}}
-            type=semver,pattern=${{ matrix.debian-tag }}-{{major}}
-            type=raw,enable=true,priority=700,value=${{ matrix.debian-tag }}
-            type=ref,event=branch,priority=600,pattern=${{ matrix.debian-tag }}
+            type=schedule,pattern=${{ matrix.output-image-tag }}-{{date 'YYYYMMDD-hhmmss' tz='Asia/Tokyo'}}
+            type=semver,pattern=${{ matrix.output-image-tag }}-{{version}}
+            type=semver,pattern=${{ matrix.output-image-tag }}-{{major}}.{{minor}}
+            type=semver,pattern=${{ matrix.output-image-tag }}-{{major}}
+            type=raw,enable=true,priority=700,value=${{ matrix.output-image-tag }}
+            type=ref,event=branch,priority=600,pattern=${{ matrix.output-image-tag }}
             type=ref,event=pr
             type=sha
 
@@ -104,7 +103,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
-          build-args: DEBIAN_TAG=${{ matrix.debian-tag }}
+          build-args: DEBIAN_TAG=${{ matrix.output-image-tag }}
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=multi platform image
 
       # Sign the resulting Docker image digest except on PRs.
