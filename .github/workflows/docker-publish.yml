@@ -31,6 +31,7 @@ jobs:
           - stable
           - sid
           - trixie
+          - experimental # to get gcc-15 now.
     runs-on: ubuntu-latest
     permissions:
       contents: read
