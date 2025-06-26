@@ -1,10 +1,10 @@
-ARG DEBIAN_TAG=stable
-FROM debian:${DEBIAN_TAG}
+FROM fedora
 ARG VCPKG_REPO_TAG="master"
 
 # install packages
-RUN apt-get update && apt-get install -y \
-    build-essential \
+RUN dnf install -y \
+    g++ \
+    make \
     cmake \
     git \
     ninja-build \
