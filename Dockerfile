@@ -36,5 +36,6 @@ WORKDIR /workspace
 RUN echo 'export PATH="~/bin:${PATH}"' >> ~/.bashrc
 ENV PATH="~/bin:${PATH}"
 ENV VCPKG_ROOT=/build-tools/vcpkg
+ENV LANG C.UTF-8
 
 RUN unlink /bin/sh && ln /bin/bash /bin/sh
